@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RootElement xmlns="http://example.org/jk/ryllm">
+  <Meetings>
+    <Meeting Location="AA">
+      <Participant>1</Participant>
+      <Participant>2</Participant>
+    </Meeting>
+    <Meeting Location="XX-YX-ZA">
+      <Participant>4</Participant>
+      <Participant>1</Participant>
+    </Meeting>
+  </Meetings>
+  <Pastures>
+    <Pasture Area="20.1">
+      <Name>XX-YX-ZA</Name>
+      <Name>XX-YX-ZB</Name>
+      <Name>AA</Name>
+    </Pasture>
+    <Pasture Area="31.3">
+      <Name>AA-BB-CC-DD</Name>
+    </Pasture>
+    <Pasture Area="31.2">
+      <Name>WQ-AZ-XX</Name>
+      <Name>SS</Name>
+      <Name>AB-CD-FG-AN-PQ</Name>
+    </Pasture>
+  </Pastures>
+  <Centaur Name="Sonny" Age="23" id="1">
+    <Beard/>
+    <Mustache/>
+  </Centaur>
+  <Centaur Name="Roger" Age="21" id="2">
+    <Beard/>
+    <Whiskers/>
+  </Centaur>
+  <Minotaur Name="Larry" Age="77" id="4" Mass="785"/>
+</RootElement>
+
+<!--  Mikołaj Ryll -->

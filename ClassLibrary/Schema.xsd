@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://example.org/jk/ryllm"
+    elementFormDefault="qualified"
+    xmlns:lib="http://example.org/jk/ryllm"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+
+	<xs:attributeGroup name="attr">
+		<xs:attribute name="id" type="xs:int" use="required"/>
+		<xs:attribute name="Name" type="xs:string" use="required"/>
+		<xs:attribute name="Age" type="xs:int" use="optional"/>
+	</xs:attributeGroup>
+
+	<xs:simpleType name="area">
+		<xs:restriction base="xs:decimal">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="myName">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[A-Z][A-Z](-[A-Z][A-Z])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="RootElement">
+		<xs:complexType>
+			<xs:sequence>
+
+				<xs:element name="Meetings" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Meeting" minOccurs="0" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Participant" type="xs:int" minOccurs="1" maxOccurs="unbounded">
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Location" type="xs:string" use="required"/>
+								</xs:complexType>
+								<xs:unique name="unique">
+									<xs:selector xpath="lib:participant"/>
+									<xs:field xpath="."/>
+								</xs:unique>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="Pastures" minOccurs="1" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Pasture" minOccurs="2" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Name" type="lib:myName" minOccurs="1" maxOccurs="unbounded">
+
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="Area" type="lib:area" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="Centaur" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Beard" minOccurs="0" maxOccurs="1"/>
+								<xs:element name="Mustache" minOccurs="0" maxOccurs="1"/>
+								<xs:element name="Whiskers" minOccurs="0" maxOccurs="1"/>
+							</xs:sequence>
+							<xs:attributeGroup ref="lib:attr"/>
+						</xs:complexType>
+					</xs:element>
+
+					<xs:element name="Minotaur" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attributeGroup ref="lib:attr"/>
+							<xs:attribute name="Mass" type="xs:decimal" use="optional"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+
+			</xs:sequence>
+		</xs:complexType>
+
+		
+		<xs:key name="key1">
+			<xs:selector xpath="lib:centaur|lib:minotaur"/>
+			<xs:field xpath="@id"/>
+		</xs:key>
+
+		<xs:keyref name="keyref1" refer="lib:key1">
+			<xs:selector xpath="lib:meetings/lib:meeting/lib:participant"/>
+			<xs:field xpath="."/>
+		</xs:keyref>
+
+		<xs:key name="key2">
+			<xs:selector xpath="lib:pastures/lib:pasture/lib:name"/>
+			<xs:field xpath="."/>
+		</xs:key>
+
+		<xs:keyref name="keyref2" refer="lib:key2">
+			<xs:selector xpath="lib:meetings/lib:meeting"/>
+			<xs:field xpath="@location"/>
+		</xs:keyref>
+
+	</xs:element>
+</xs:schema>
+
+<!--  Mikołaj Ryll -->
